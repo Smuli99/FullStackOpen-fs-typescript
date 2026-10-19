@@ -1,5 +1,6 @@
 import { calculateBmi } from './bmiCalculator.ts';
 import { isNotNumber } from './helper.ts';
+
 import express from 'express';
 const app = express();
 
