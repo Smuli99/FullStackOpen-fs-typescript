@@ -1,12 +1,12 @@
-import { isNotNumber } from './helper.ts';
+// import { isNotNumber } from './helper.ts';
 
-const helperText =
-  'Arguments: target, atleast 1 days hours';
+// const helperText =
+//   'Arguments: target, atleast 1 days hours';
 
 interface TrainingPeriodValues {
   periodLength: number;
   trainingDays: number;
-  sucess: boolean;
+  success: boolean;
   rating: number;
   ratingDescription: string;
   target: number;
@@ -27,18 +27,18 @@ const getRatingDesc = (rating: number): string => {
   return 'Well done buddy proud of you <3';
 };
 
-const parseArguments = (args: string[]): number[] => {
-  if (args.length < 3) throw new Error('No arguments given');
+// const parseArguments = (args: string[]): number[] => {
+//   if (args.length < 3) throw new Error('No arguments given');
 
-  const validArgs: number[] = [];
+//   const validArgs: number[] = [];
 
-  args.slice(2).map(arg => {
-    if (!isNotNumber(arg)) validArgs.push(Number(arg));
-  });
+//   args.slice(2).map(arg => {
+//     if (!isNotNumber(arg)) validArgs.push(Number(arg));
+//   });
 
-  if (validArgs.length < 1) throw new Error('Provided values were not numbers!');
-  else return validArgs;
-};
+//   if (validArgs.length < 1) throw new Error('Provided values were not numbers!');
+//   else return validArgs;
+// };
 
 export const exerciseCalculator = (trainingPeriod: number[], target: number): TrainingPeriodValues => {
   const periodLength: number = trainingPeriod.length;
@@ -47,7 +47,7 @@ export const exerciseCalculator = (trainingPeriod: number[], target: number): Tr
   const rating: number = countRating(trainingHours);
   const ratingDescription: string = getRatingDesc(rating);
   const average: number = trainingHours / periodLength;
-  const sucess: boolean = average >= target;
+  const success: boolean = average >= target;
 
   return {
     periodLength,
@@ -56,7 +56,7 @@ export const exerciseCalculator = (trainingPeriod: number[], target: number): Tr
     ratingDescription,
     average,
     target,
-    sucess
+    success
   };
 };
 
@@ -84,11 +84,11 @@ export const exerciseCalculator = (trainingPeriod: number[], target: number): Tr
 //   };
 // };
 
-try {
-  const trainingPeriod = parseArguments(process.argv);
-  console.log(exerciseCalculator(trainingPeriod));
-} catch (error: unknown) {
-  if (error instanceof Error) {
-    console.log(`Error: ${error.message}.\n${helperText}`);
-  }
-}
+// try {
+//   const trainingPeriod = parseArguments(process.argv);
+//   console.log(exerciseCalculator(trainingPeriod));
+// } catch (error: unknown) {
+//   if (error instanceof Error) {
+//     console.log(`Error: ${error.message}.\n${helperText}`);
+//   }
+// }

@@ -25,8 +25,8 @@ app.get('/bmi', (req, res) => {
   try {
     const bmi = calculateBmi(Number(height), Number(weight));
     return res.send({
-    height,
-    weight,
+    height: Number(height),
+    weight: Number(weight),
     bmi
   });
   } catch (error: unknown) {
@@ -42,9 +42,13 @@ app.post('/exercises', (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { daily_exercises, target } = req.body;
 
+  if (!daily_exercises || !target) {
+    return res.status(400).send({ error: 'parameters missing' });
+  }
+
   if (
-    !daily_exercises || !target || typeof target !== 'number' ||
-    !Array.isArray(daily_exercises) || !daily_exercises.every(val => typeof val === 'number')
+    typeof target !== 'number' || !Array.isArray(daily_exercises) ||
+    !daily_exercises.every(val => typeof val === 'number')
   ) {
     return res.status(400).send({ error: 'malformatted parameters' });
   }
