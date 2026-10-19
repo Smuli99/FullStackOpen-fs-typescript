@@ -18,12 +18,12 @@ const parseArguments = (args: string[]): BmiValues => {
   throw new Error('Provided values were not numbers!');
 }
 
-const calculateBmi = (height: number, weight: number) => {
+export const calculateBmi = (height: number, weight: number): string => {
   if (weight === 0) throw new Error('Can\'t divide by 0!');
 
   const bmi = weight / ((height / 100) * (height / 100));
 
-  if (bmi < 18.5) return 'Under range';
+  if (bmi < 18.5) return 'Underweight';
   if (bmi >= 18.5 && bmi < 25) return 'Normal range';
   return 'Overweight';
 }
