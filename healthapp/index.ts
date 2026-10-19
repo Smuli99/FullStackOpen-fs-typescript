@@ -1,5 +1,6 @@
 import { calculateBmi } from './bmiCalculator.ts';
 import { isNotNumber } from './helper.ts';
+import { exerciseCalculator } from './exerciseCalculator.ts';
 
 import express from 'express';
 const app = express();
@@ -37,7 +38,22 @@ app.get('/bmi', (req, res) => {
   }
 });
 
-const PORT = 3003;
+app.post('/exercises', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { daily_exercises, target } = req.body;
+
+  if (
+    !daily_exercises || !target || typeof target !== 'number' ||
+    !Array.isArray(daily_exercises) || !daily_exercises.every(val => typeof val === 'number')
+  ) {
+    return res.status(400).send({ error: 'malformatted parameters' });
+  }
+
+  const result = exerciseCalculator(daily_exercises, target);
+  return res.send(result);
+});
+
+const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

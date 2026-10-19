@@ -40,14 +40,10 @@ const parseArguments = (args: string[]): number[] => {
   else return validArgs;
 };
 
-const exerciseCalculator = (trainingPeriod: number[]): TrainingPeriodValues => {
-  if (trainingPeriod.length < 2) throw new Error('Expected target and at least one day of hours');
-  const target = trainingPeriod[0];
-  const days = trainingPeriod.slice(1);
-  
-  const periodLength: number = days.length;
-  const trainingDays: number = days.filter(val => val > 0).length;
-  const trainingHours: number = days.reduce((acc, current) => acc + current, 0);
+export const exerciseCalculator = (trainingPeriod: number[], target: number): TrainingPeriodValues => {
+  const periodLength: number = trainingPeriod.length;
+  const trainingDays: number = trainingPeriod.filter(val => val > 0).length;
+  const trainingHours: number = trainingPeriod.reduce((acc, current) => acc + current, 0);
   const rating: number = countRating(trainingHours);
   const ratingDescription: string = getRatingDesc(rating);
   const average: number = trainingHours / periodLength;
@@ -63,6 +59,30 @@ const exerciseCalculator = (trainingPeriod: number[]): TrainingPeriodValues => {
     sucess
   };
 };
+
+// const exerciseCalculator = (trainingPeriod: number[]): TrainingPeriodValues => {
+//   if (trainingPeriod.length < 2) throw new Error('Expected target and at least one day of hours');
+//   const target = trainingPeriod[0];
+//   const days = trainingPeriod.slice(1);
+  
+//   const periodLength: number = days.length;
+//   const trainingDays: number = days.filter(val => val > 0).length;
+//   const trainingHours: number = days.reduce((acc, current) => acc + current, 0);
+//   const rating: number = countRating(trainingHours);
+//   const ratingDescription: string = getRatingDesc(rating);
+//   const average: number = trainingHours / periodLength;
+//   const sucess: boolean = average >= target;
+
+//   return {
+//     periodLength,
+//     trainingDays,
+//     rating,
+//     ratingDescription,
+//     average,
+//     target,
+//     sucess
+//   };
+// };
 
 try {
   const trainingPeriod = parseArguments(process.argv);
