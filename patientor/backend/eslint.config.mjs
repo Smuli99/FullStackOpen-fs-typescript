@@ -1,10 +1,10 @@
-import { DefineConfig } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint, { plugin } from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin';
 
-export default DefineConfig({
-  files: ['**/*.ts', '**/*.mjs'],
+export default defineConfig({
+  files: ['**/*.ts'],
   extends: [
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
@@ -22,6 +22,7 @@ export default DefineConfig({
     '@stylistic/semi': 'error',
     '@typescript-eslint/no-unsafe-assignment': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
+    "@typescript-eslint/consistent-type-imports": "error",
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
