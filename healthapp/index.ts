@@ -11,10 +11,13 @@ app.get('/hello', (_req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-  const height: string = String(req.query.height);
-  const weight: string = String(req.query.weight);
+  const height = (req.query.height);
+  const weight = (req.query.weight);
 
-  if (!height || !weight || isNotNumber(height) || isNotNumber(weight)) {
+  if (
+    !height || !weight || typeof height !== 'string' || typeof weight !== 'string'
+    || isNotNumber(height) || isNotNumber(weight)
+  ) {
     return res.status(400).send({ error: 'malformatted parameters' });
   }
 

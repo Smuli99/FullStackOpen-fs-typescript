@@ -18,14 +18,14 @@ const countRating = (hours: number): number => {
   if (hours < 10) return 1;
   if (hours < 15) return 2;
   return 3;
-}
+};
 
 const getRatingDesc = (rating: number): string => {
   if (rating === 0) return 'well can\'t do worse than that';
   if (rating === 1) return 'camoon gotta do better than that';
   if (rating === 2) return 'not too bad but could be better';
   return 'Well done buddy proud of you <3';
-}
+};
 
 const parseArguments = (args: string[]): number[] => {
   if (args.length < 3) throw new Error('No arguments given');
@@ -33,12 +33,12 @@ const parseArguments = (args: string[]): number[] => {
   const validArgs: number[] = [];
 
   args.slice(2).map(arg => {
-    if (!isNotNumber(arg)) validArgs.push(Number(arg))
+    if (!isNotNumber(arg)) validArgs.push(Number(arg));
   });
 
   if (validArgs.length < 1) throw new Error('Provided values were not numbers!');
   else return validArgs;
-}
+};
 
 const exerciseCalculator = (trainingPeriod: number[]): TrainingPeriodValues => {
   if (trainingPeriod.length < 2) throw new Error('Expected target and at least one day of hours');
@@ -61,7 +61,7 @@ const exerciseCalculator = (trainingPeriod: number[]): TrainingPeriodValues => {
     average,
     target,
     sucess
-  }
+  };
 };
 
 try {
