@@ -17,7 +17,7 @@ export interface DiagnoseEntry {
 export const NewPatientSchema = z.object({
   name: z.string(),
   dateOfBirth: z.iso.date(),
-  ssn: z.string().regex(/^\d{5}-\d{2,}[a-zA-Z]?$/),
+  ssn: z.string().regex(/^\d{5,}-\d{2,}[a-zA-Z]?$/),
   gender: z.enum(Gender),
   occupation: z.string()
 });

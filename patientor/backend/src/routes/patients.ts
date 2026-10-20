@@ -11,7 +11,7 @@ router.get('/', (_req, res: Response<NonSensitivePatientEntry[]>) => {
 
 router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatientEntry>, res: Response<PatientEntry>) => {
   const addedPatient: PatientEntry = patientService.addNewPatientEntry(req.body);
-  res.status(201).json(addedPatient);
+  res.json(addedPatient);
 });
 
 router.use(errorMiddleware);
