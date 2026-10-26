@@ -45,28 +45,36 @@ const NewDiaryForm = ({ addDiary }: NewDiaryFormProps) => {
           />
         </label>
         <label>
-          Weather
-          <select
-            name='weather'
-            value={weather}
-            onChange={(event) => setWeather(event.target.value as Weather)}
-          >
-            {Object.values(Weather).map(w =>
-              <option key={w} value={w}>{w}</option>
-            )}
-          </select>
+          Visibility:
+      
+          {Object.values(Visibility).map(v =>
+            <label key={v} style={{ marginLeft: 5 }}>
+              {v}
+              <input
+                type='radio'
+                name='visibility'
+                value={v}
+                checked={visibility === v}
+                onChange={(event) => setVisibility(event.target.value as Visibility)}
+              />
+            </label>
+          )}
         </label>
         <label>
-          Visibility
-          <select
-            name='visibility'
-            value={visibility}
-            onChange={(event) => setVisibility(event.target.value as Visibility)}
-          >
-            {Object.values(Visibility).map(v =>
-              <option key={v} value={v}>{v}</option>
-            )}
-          </select>
+          Weather:
+          
+          {Object.values(Weather).map(w =>
+            <label key={w} style={{ marginLeft: 5 }}>
+              {w}
+              <input
+                type='radio'
+                name='weather'
+                value={w}
+                checked={weather === w}
+                onChange={(event) => setWeather(event.target.value as Weather)}
+              />
+            </label>
+          )}
         </label>
         <label>
           comment
