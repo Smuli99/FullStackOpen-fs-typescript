@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from 'express';
-import type { NonSensitivePatientEntry, NewPatientEntry, PatientEntry } from '../types.ts';
+import type { NonSensitivePatientEntry, NewPatientEntry, Patient } from '../types.ts';
 import patientService from '../services/patientService.ts';
 import { errorMiddleware, newPatientParser } from '../middleware.ts';
 
@@ -9,13 +9,13 @@ router.get('/', (_req, res: Response<NonSensitivePatientEntry[]>) => {
   res.send(patientService.getNonSensitiveEntries());
 });
 
-router.get('/:id', (req, res: Response<PatientEntry>) => {
-  const patient: PatientEntry = patientService.getPatientEntries(req.params.id);
+router.get('/:id', (req, res: Response<Patient>) => {
+  const patient: Patient = patientService.getPatientEntries(req.params.id);
   res.send(patient);
 });
 
-router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatientEntry>, res: Response<PatientEntry>) => {
-  const addedPatient: PatientEntry = patientService.addNewPatientEntry(req.body);
+router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatientEntry>, res: Response<Patient>) => {
+  const addedPatient: Patient = patientService.addNewPatientEntry(req.body);
   res.json(addedPatient);
 });
 
