@@ -8,18 +8,36 @@ const getEntries = (): PatientEntry[] => {
 
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   return patients.map(
-    ({ id, name, dateOfBirth, gender, occupation }) => ({
+    ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
       id,
       name,
       dateOfBirth,
       gender,
-      occupation
+      occupation,
+      entries
     })
   );
 };
 
+const getPatientNonSensitiveEntries = (id: string): NonSensitivePatientEntry => {
+  const patient = patients.find(patient => patient.id === id);
+
+  if (!patient) {
+    throw new Error(`Patient with id: ${id} not found`);
+  }
+  
+  return {
+    id: patient.id,
+    name: patient.name,
+    dateOfBirth: patient.dateOfBirth,
+    gender: patient.gender,
+    occupation: patient.occupation,
+    entries: patient.entries
+  };
+};
+
 const addNewPatientEntry = (entry: NewPatientEntry): PatientEntry => {
-  const newEntry: PatientEntry = ({ ...entry, id: uuid() });
+  const newEntry: PatientEntry = ({ ...entry, id: uuid(), entries: [] });
   patients.push(newEntry);
   return newEntry;
 };
@@ -27,5 +45,6 @@ const addNewPatientEntry = (entry: NewPatientEntry): PatientEntry => {
 export default {
   getEntries,
   getNonSensitiveEntries,
-  addNewPatientEntry
+  addNewPatientEntry,
+  getPatientNonSensitiveEntries,
 };
