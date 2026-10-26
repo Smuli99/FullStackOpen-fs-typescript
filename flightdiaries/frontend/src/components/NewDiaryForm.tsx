@@ -32,7 +32,7 @@ const NewDiaryForm = ({ addDiary }: NewDiaryFormProps) => {
   
   return (
     <div>
-      <h2>New Diary</h2>
+      <h3>Add New Diary</h3>
 
       <form onSubmit={submit}>
         <label>

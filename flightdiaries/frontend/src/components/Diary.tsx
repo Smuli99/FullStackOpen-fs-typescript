@@ -3,10 +3,10 @@ import type { DiaryType } from '../types';
 const Diary = ({ diary }: { diary: DiaryType }) => {
   return (
     <div>
+      <h4>{diary.date}</h4>
       <p>
-        <strong>Date:</strong> {diary.date} <br />
-        <strong>Weather:</strong> {diary.weather} <br />
-        <strong>Visibility:</strong> {diary.visibility} <br />
+        visibility: {diary.visibility} <br />
+        weather: {diary.weather}
       </p>
     </div>
   );
