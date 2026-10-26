@@ -17,7 +17,7 @@ export const Visibility = {
 
 export type Visibility = typeof Visibility[keyof typeof Visibility];
 
-export interface Diary {
+export interface DiaryType {
   id: number;
   date: string;
   weather: Weather;
@@ -25,4 +25,4 @@ export interface Diary {
   comment?: string;
 }
 
-export type newDiary = Omit<Diary, 'id'>;
+export type NewDiaryType = Omit<DiaryType, 'id'>;

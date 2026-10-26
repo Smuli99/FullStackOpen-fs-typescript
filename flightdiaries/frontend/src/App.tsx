@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import type { Diary } from './types';
+import type { DiaryType, NewDiaryType } from './types';
 
 import diaryService from './diaryService';
+import Diaries from './components/Diaries';
+import NewDiaryForm from './components/NewDiaryForm';
 
 const App = () => {
-  const [diaries, setDiares] = useState<Diary[]>([]);
+  const [diaries, setDiares] = useState<DiaryType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,17 +16,24 @@ const App = () => {
 
     fetchData();
   }, []);
+
+  const addDiary = async (diary: NewDiaryType) => {
+    try {
+      const newDiary: DiaryType = await diaryService.create(diary);
+      setDiares(diaries.concat(newDiary));
+    } catch (error: unknown) {
+      let errorMessage = 'Oops';
+      if (error instanceof Error) {
+        errorMessage += ` error: ${error.message}`;
+      }
+      console.log(errorMessage);
+    }
+  };
   
   return (
     <div>
-      <h2>Diaries</h2>
-      {diaries.map(diary =>
-        <p key={diary.id}>
-          Date: {diary.date} <br />
-          Weather: {diary.weather} <br />
-          Visibility: {diary.visibility}
-        </p>
-      )}
+      <Diaries diaries={diaries} />
+      <NewDiaryForm addDiary={addDiary}/>
     </div>
   );
 };
