@@ -19,7 +19,7 @@ const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   );
 };
 
-const getPatientNonSensitiveEntries = (id: string): NonSensitivePatientEntry => {
+const getPatientEntries = (id: string): PatientEntry => {
   const patient = patients.find(patient => patient.id === id);
 
   if (!patient) {
@@ -30,6 +30,7 @@ const getPatientNonSensitiveEntries = (id: string): NonSensitivePatientEntry => 
     id: patient.id,
     name: patient.name,
     dateOfBirth: patient.dateOfBirth,
+    ssn: patient.ssn,
     gender: patient.gender,
     occupation: patient.occupation,
     entries: patient.entries
@@ -46,5 +47,5 @@ export default {
   getEntries,
   getNonSensitiveEntries,
   addNewPatientEntry,
-  getPatientNonSensitiveEntries,
+  getPatientEntries,
 };

@@ -26,7 +26,7 @@ export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Entry {
-  
+  // TODO
 }
 
 export interface PatientEntry extends NewPatientEntry {
