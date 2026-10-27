@@ -1,32 +1,32 @@
-import { Patient } from "../../types";
-import { Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Patient as PatientType } from "../../types";
+import patientService from '../../services/patients';
+import Patient from "./Patient";
+import PatientEntries from "./PatientEntries";
 
-import MaleRoundedIcon from '@mui/icons-material/MaleRounded';
-import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded';
+const PatientPage = () => {
+  const { id } = useParams();
+  const [patient, setPatient] = useState<PatientType>();
+  
+  useEffect(() => {
+    if (!id) return;
 
-interface Props {
-  patient: Patient | undefined;
-}
+    const fetchData = async () => {
+      const data = await patientService.getOne(id);
+      setPatient(data);
+    };
 
-const PatientPage = ({ patient }: Props) => {
-  if (!patient) return null;
+    fetchData();
+  }, [id]);
+
+  if (!patient) return <div>Loading...</div>;
+  console.log(patient);
 
   return (
     <div>
-      <Typography variant="h5">
-        {patient.name}
-        {patient.gender === 'male' && <MaleRoundedIcon sx={{ verticalAlign: "middle", ml: 1 }}/>}
-        {patient.gender === 'female' && <FemaleRoundedIcon sx={{ verticalAlign: "middle", ml: 1 }}/>}
-      </Typography>
-      <Typography variant="body1" sx={{ marginTop: 1 }}>
-        ssn: {patient.ssn}
-      </Typography>
-      <Typography variant="body1">
-        occupation: {patient.occupation}
-      </Typography>
-      <Typography variant="body1">
-        date of birth: {patient.dateOfBirth}
-      </Typography>
+      <Patient patient={patient} />
+      <PatientEntries entries={patient.entries} />
     </div>
   );
 };
