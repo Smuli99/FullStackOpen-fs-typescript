@@ -21,7 +21,6 @@ const PatientPage = () => {
   }, [id]);
 
   if (!patient) return <div>Loading...</div>;
-  console.log(patient);
 
   return (
     <div>

@@ -1,30 +1,41 @@
+import { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
-import { Entry } from "../../types";
+import { Diagnosis, Entry } from "../../types";
+import diagnoseService from '../../services/diagnoses';
 
 interface Props {
   entries: Entry[]
 }
 
 const PatientEntries = ({ entries }: Props) => {
-  // const assertNever = (value: never): never => {
-  //   throw new Error(`Unhandeled discriminated union member: ${JSON.stringify(value)}`);
-  // };
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
-  console.log(entries);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await diagnoseService.getAll();
+      setDiagnoses(data);
+    };
+
+    fetchData();
+  }, []);
+  
+  const getDiagnoseName = (code: string): string | undefined =>
+    diagnoses.find(d => d.code === code)?.name;
+
   return (
     <div>
       <Typography variant="h6" sx={{ marginTop: 2 }}>entries</Typography>
 
       {entries.map(entry =>
-        <div>
-          <Typography key={entry.id} sx={{ marginTop: 2 }}>
+        <div key={entry.id}>
+          <Typography sx={{ marginTop: 2 }}>
             {entry.date} {entry.description}
           </Typography>
 
           {entry.diagnosisCodes && (
             <ul>
               {entry.diagnosisCodes.map(d =>
-                <li key={d}>{d}</li>
+                <li key={d}>{d} {getDiagnoseName(d)}</li>
               )}
             </ul>
           )}
