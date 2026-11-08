@@ -1,12 +1,12 @@
 import patients from '../data/patients.ts';
-import type { Patient, NonSensitivePatientEntry, NewPatientEntry } from '../types.ts';
+import type { Patient, NonSensitivePatientEntry, NewPatientEntry, NewEntry, Entry } from '../types.ts';
 import { v1 as uuid } from 'uuid';
 
-const getEntries = (): Patient[] => {
+const getPatients = (): Patient[] => {
   return patients;
 };
 
-const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
+const getNonSensitivePatients = (): NonSensitivePatientEntry[] => {
   return patients.map(
     ({ id, name, dateOfBirth, gender, occupation }) => ({
       id,
@@ -18,7 +18,7 @@ const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   );
 };
 
-const getPatientEntries = (id: string): Patient => {
+const getPatient = (id: string): Patient => {
   const patient = patients.find(patient => patient.id === id);
 
   if (!patient) {
@@ -36,15 +36,25 @@ const getPatientEntries = (id: string): Patient => {
   };
 };
 
-const addNewPatientEntry = (entry: NewPatientEntry): Patient => {
+const addNewPatient = (entry: NewPatientEntry): Patient => {
   const newEntry: Patient = ({ ...entry, id: uuid(), entries: [] });
   patients.push(newEntry);
   return newEntry;
 };
 
+const addNewEntry = (id: string, entry: NewEntry): Entry => {
+  const patient: Patient | undefined = patients.find(p => p.id === id);
+  if (!patient) throw new Error(`Patient with id: ${id} not found`);
+
+  const newEntry: Entry = ({ ...entry, id: uuid() });
+  patient.entries.push(newEntry);
+  return newEntry;
+};
+
 export default {
-  getEntries,
-  getNonSensitiveEntries,
-  addNewPatientEntry,
-  getPatientEntries,
+  getPatients,
+  getNonSensitivePatients,
+  getPatient,
+  addNewPatient,
+  addNewEntry,
 };

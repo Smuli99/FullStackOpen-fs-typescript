@@ -32,7 +32,6 @@ export interface BaseEntry {
   diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const HealthCheckRating = {
   Healthy: 0,
   LowRisk: 1,
@@ -42,33 +41,44 @@ const HealthCheckRating = {
 
 type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating];
 
-interface HealthCheckEntry extends BaseEntry {
-  type: 'HealthCheck';
-  healthCheckRating: HealthCheckRating;
-}
+const BaseNewEntrySchema = z.object({
+  description: z.string(),
+  date: z.iso.date(),
+  specialist: z.string(),
+  diagnosisCodes: z.array(z.string()).optional(),
+});
 
-interface SickLeave {
-  startDate: string;
-  endDate: string;
-}
+const HospitalEntrySchema = BaseNewEntrySchema.extend({
+  type: z.literal('Hospital'),
+  discharge: z.object({
+    date: z.iso.date(),
+    criteria: z.string(),
+  }),
+});
 
-export interface OccupationalHealthcareEntry extends BaseEntry {
-  type: 'OccupationalHealthcare';
-  employerName: string;
-  sickLeave?: SickLeave;
-}
+const OccupationalHealthcareEntrySchema = BaseNewEntrySchema.extend({
+  type: z.literal('OccupationalHealthcare'),
+  employerName: z.string(),
+  sickLeave: z.object({
+    startDate: z.iso.date(),
+    endDate: z.iso.date(),
+  }).optional(),
+});
 
-interface Discharge {
-  date: string;
-  criteria: string;
-}
+const HealthCheckEntrySchema = BaseNewEntrySchema.extend({
+  type: z.literal('HealthCheck'),
+  healthCheckRating: z.enum(HealthCheckRating),
+});
 
-export interface HospitalEntry extends BaseEntry {
-  type: 'Hospital';
-  discharge: Discharge;
-}
+export const NewEntrySchema = z.discriminatedUnion('type', [
+  HospitalEntrySchema,
+  OccupationalHealthcareEntrySchema,
+  HealthCheckEntrySchema,
+]);
 
-export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
+export type NewEntry = z.infer<typeof NewEntrySchema>;
+
+export type Entry = NewEntry & { id: string };
 
 export interface Patient extends NewPatientEntry {
   id: string;
