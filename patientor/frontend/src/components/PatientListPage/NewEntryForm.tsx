@@ -309,7 +309,7 @@ const NewEntryForm = ({ patientId, onAdded }: Props) => {
         </div>
 
         <Button variant='contained' sx={{ marginTop: 1 }} type='submit'>
-          Add
+          Add New Entry
         </Button>
 
         <Button variant='outlined' onClick={handleCancel} sx={{ marginLeft: 1, marginTop: 1 }}>
